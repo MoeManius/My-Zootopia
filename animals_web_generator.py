@@ -69,19 +69,54 @@ def write_html(file_path, content):
         handle.write(content)
 
 
+def get_unique_skin_types(data):
+    """Returns a list of unique skin types from the animals' data."""
+    skin_types = set()
+    for animal in data:
+        skin_type = animal.get('characteristics', {}).get('skin_type')
+        if skin_type:
+            skin_types.add(skin_type)
+    return sorted(skin_types)
+
+
+def filter_animals_by_skin_type(data, selected_skin_type):
+    """Filters the animals by the selected skin type."""
+    return [animal for animal in data if animal.get('characteristics', {}).get('skin_type') == selected_skin_type]
+
+
 def main():
     # Load data and template
     animals_data = load_data('animals_data.json')
     template = read_template('animals_template.html')
 
-    # Generate animal info string
-    animal_info = generate_animal_info(animals_data)
+    # Get unique skin types
+    skin_types = get_unique_skin_types(animals_data)
 
-    # Create the new HTML content
-    new_html_content = create_html(template, animal_info)
+    # Display available skin types to the user
+    print("Available skin types:")
+    for idx, skin_type in enumerate(skin_types, 1):
+        print(f"{idx}. {skin_type}")
 
-    # Write the new HTML content to a file
-    write_html('animals.html', new_html_content)
+    # Ask the user to select a skin type
+    choice = int(input(f"Select a skin type (1-{len(skin_types)}): "))
+    selected_skin_type = skin_types[choice - 1]
+
+    # Filter animals by selected skin type
+    filtered_animals = filter_animals_by_skin_type(animals_data, selected_skin_type)
+
+    if filtered_animals:
+        # Generate animal info string for the filtered animals
+        animal_info = generate_animal_info(filtered_animals)
+
+        # Create the new HTML content
+        new_html_content = create_html(template, animal_info)
+
+        # Write the new HTML content to a file
+        write_html('animals.html', new_html_content)
+        print(f"HTML file generated for animals with skin type '{selected_skin_type}'.")
+
+    else:
+        print(f"No animals found with the skin type '{selected_skin_type}'.")
 
 
 if __name__ == "__main__":
