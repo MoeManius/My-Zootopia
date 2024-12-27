@@ -14,27 +14,29 @@ def read_template(file_path):
 
 
 def generate_animal_info(data):
-    """ Generates a string with the animal data """
+    """ Generates a string with the animal data in HTML format """
     output = ''
     for animal in data:
-        if 'name' in animal:
-            output += f"Name: {animal['name']}\n"
+        output += '<li class="cards__item">\n'
+        output += f'  <div class="card__title">{animal.get("name", "Unknown")}</div>\n'
+        output += '  <p class="card__text">\n'
 
         characteristics = animal.get('characteristics', {})
 
         diet = characteristics.get('diet')
         if diet:
-            output += f"Diet: {diet}\n"
+            output += f'      <strong>Diet:</strong> {diet}<br/>\n'
 
         locations = animal.get('locations')
         if locations:
-            output += f"Location: {locations[0]}\n"
+            output += f'      <strong>Location:</strong> {", ".join(locations)}<br/>\n'
 
         animal_type = characteristics.get('type')
         if animal_type:
-            output += f"Type: {animal_type}\n"
+            output += f'      <strong>Type:</strong> {animal_type}<br/>\n'
 
-        output += '\n'  # Add newline for better readability
+        output += '  </p>\n'
+        output += '</li>\n'
 
     return output
 
