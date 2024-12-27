@@ -81,7 +81,10 @@ def get_unique_skin_types(data):
 
 def filter_animals_by_skin_type(data, selected_skin_type):
     """Filters the animals by the selected skin type."""
-    return [animal for animal in data if animal.get('characteristics', {}).get('skin_type') == selected_skin_type]
+    return [
+        animal for animal in data
+        if animal.get('characteristics', {}).get('skin_type') == selected_skin_type
+    ]
 
 
 def main():
@@ -98,8 +101,16 @@ def main():
         print(f"{idx}. {skin_type}")
 
     # Ask the user to select a skin type
-    choice = int(input(f"Select a skin type (1-{len(skin_types)}): "))
-    selected_skin_type = skin_types[choice - 1]
+    while True:
+        try:
+            choice = int(input(f"Select a skin type (1-{len(skin_types)}): "))
+            if 1 <= choice <= len(skin_types):
+                selected_skin_type = skin_types[choice - 1]
+                break
+            else:
+                print(f"Error: Please enter a number between 1 and {len(skin_types)}.")
+        except ValueError:
+            print("Error: Invalid input. Please enter a number.")
 
     # Filter animals by selected skin type
     filtered_animals = filter_animals_by_skin_type(animals_data, selected_skin_type)
