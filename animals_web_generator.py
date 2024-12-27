@@ -18,33 +18,35 @@ def serialize_animal(animal):
     output = '<li class="cards__item">\n'
     output += f'  <div class="card__title">{animal.get("name", "Unknown")}</div>\n'
     output += '  <p class="card__text">\n'
+    output += '    <ul class="animal-details">\n'
 
     characteristics = animal.get('characteristics', {})
 
     diet = characteristics.get('diet')
     if diet:
-        output += f'      <strong>Diet:</strong> {diet}<br/>\n'
+        output += f'      <li class="animal-detail"><strong>Diet:</strong> {diet}</li>\n'
 
     locations = animal.get('locations')
     if locations:
-        output += f'      <strong>Location:</strong> {", ".join(locations)}<br/>\n'
+        output += f'      <li class="animal-detail"><strong>Location:</strong> {", ".join(locations)}</li>\n'
 
     animal_type = characteristics.get('type')
     if animal_type:
-        output += f'      <strong>Type:</strong> {animal_type}<br/>\n'
+        output += f'      <li class="animal-detail"><strong>Type:</strong> {animal_type}</li>\n'
 
     lifespan = characteristics.get('lifespan')
     if lifespan:
-        output += f'      <strong>Lifespan:</strong> {lifespan}<br/>\n'
+        output += f'      <li class="animal-detail"><strong>Lifespan:</strong> {lifespan}</li>\n'
 
     weight = characteristics.get('weight')
     if weight:
-        output += f'      <strong>Weight:</strong> {weight}<br/>\n'
+        output += f'      <li class="animal-detail"><strong>Weight:</strong> {weight}</li>\n'
 
     length = characteristics.get('length')
     if length:
-        output += f'      <strong>Length:</strong> {length}<br/>\n'
+        output += f'      <li class="animal-detail"><strong>Length:</strong> {length}</li>\n'
 
+    output += '    </ul>\n'
     output += '  </p>\n'
     output += '</li>\n'
 
