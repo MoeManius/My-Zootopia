@@ -33,6 +33,18 @@ def serialize_animal(animal):
     if animal_type:
         output += f'      <strong>Type:</strong> {animal_type}<br/>\n'
 
+    lifespan = characteristics.get('lifespan')
+    if lifespan:
+        output += f'      <strong>Lifespan:</strong> {lifespan}<br/>\n'
+
+    weight = characteristics.get('weight')
+    if weight:
+        output += f'      <strong>Weight:</strong> {weight}<br/>\n'
+
+    length = characteristics.get('length')
+    if length:
+        output += f'      <strong>Length:</strong> {length}<br/>\n'
+
     output += '  </p>\n'
     output += '</li>\n'
 
